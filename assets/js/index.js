@@ -1,6 +1,4 @@
 
-var sideLinks = document.querySelectorAll(".side-links")
-
 var todayLink = document.querySelector(".today-link")
 
 var launchesLink = document.querySelector(".launches-link")
@@ -14,17 +12,50 @@ var launchesSection = document.getElementById("launches")
 var planetsSection = document.getElementById("planets")
 
 
+var sideBar = document.querySelector(".sidebar-mobile")
+
+
+var menuBtn = document.getElementById("sidebar-toggle");
+
+var sidebarOverlay = document.getElementById("sidebar-overlay");
 
 
 
 
-// for (var i = 0; i < sideLinks.length; i++) {
-//     sideLinks[i].addEventListener("click", function (e) {
+function openSidebar() {
 
-//         console.log(e);
 
-//     })
-// }
+
+  sideBar.classList.add("sidebar-open");
+
+  sidebarOverlay.classList.remove("hidden");
+
+
+
+}
+
+
+function closeSidebar() {
+
+
+
+  sidebarOverlay.classList.add("hidden");
+
+
+  sideBar.classList.remove("sidebar-open");
+
+
+
+}
+
+
+
+menuBtn.addEventListener("click", openSidebar);
+
+sidebarOverlay.addEventListener("click", closeSidebar);
+
+
+
 
 
 launchesLink.addEventListener("click", function () {
@@ -47,6 +78,10 @@ launchesLink.addEventListener("click", function () {
   planetsLink.classList.add("text-slate-300", "nav-link", "hover:bg-slate-800");
 
   planetsSection.classList.add("hidden")
+
+
+
+  closeSidebar();
 
 
 })
@@ -76,6 +111,7 @@ planetsLink.addEventListener("click", function () {
   launchesSection.classList.add("hidden");
 
 
+  closeSidebar();
 
 
 })
@@ -103,6 +139,7 @@ todayLink.addEventListener("click", function () {
   launchesSection.classList.add("hidden");
 
 
+  closeSidebar();
 
 })
 
@@ -124,8 +161,6 @@ async function getPlanets() {
     var res = await fetch("https://solar-system-opendata-proxy.vercel.app/api/planets");
 
     var data = await res.json();
-
-    // console.log("Plants", data.bodies);
 
     var planetsName = [];
     var planetsImage = [];
@@ -230,13 +265,12 @@ function earthDisplay(x) {
 
   var earth = x.bodies[6];
 
-  var semi = (earth.semimajorAxis /1000000 ).toFixed(1);
-  
+  var semi = (earth.semimajorAxis / 1000000).toFixed(1);
+
   var redius = Math.round(earth.meanRadius).toLocaleString("en-US");
 
 
-  console.log(semi);
-  
+
   var container = ` `;
 
   container += `
@@ -400,11 +434,11 @@ function earthDisplay(x) {
               <div class="space-y-3 text-sm">
                 <div class="flex justify-between items-center py-2 border-b border-slate-700">
                   <span class="text-slate-400">Perihelion</span>
-                  <span id="planet-perihelion" class="font-semibold">${(earth.perihelion/1000000).toFixed(1)}M km</span>
+                  <span id="planet-perihelion" class="font-semibold">${(earth.perihelion / 1000000).toFixed(1)}M km</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-slate-700">
                   <span class="text-slate-400">Aphelion</span>
-                  <span id="planet-aphelion" class="font-semibold">${(earth.aphelion/1000000).toFixed(1)}M km</span>
+                  <span id="planet-aphelion" class="font-semibold">${(earth.aphelion / 1000000).toFixed(1)}M km</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-slate-700">
                   <span class="text-slate-400">Eccentricity</span>
@@ -424,7 +458,7 @@ function earthDisplay(x) {
                 </div>
                 <div class="flex justify-between items-center py-2">
                   <span class="text-slate-400">Escape Velocity</span>
-                  <span id="planet-escape" class="font-semibold">${earth.escape/1000} km/s</span>
+                  <span id="planet-escape" class="font-semibold">${earth.escape / 1000} km/s</span>
                 </div>
               </div>
             </div>
@@ -847,7 +881,7 @@ async function getTodayPic() {
 
 
 
-    console.log(data);
+    // console.log(data);
 
 
 
